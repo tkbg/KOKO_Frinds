@@ -58,6 +58,10 @@
 			membershipExceptions = (
 				Model/ServerAPIManager.swift,
 				Model/User.swift,
+				View/AddFriendViewController.swift,
+				View/cell/inviteCell.swift,
+				View/cell/inviteCell.xib,
+				View/FriendViewController.swift,
 			);
 			target = 257305472D06E9EA00F7A7C5 /* Koko_FriendsTests */;
 		};
@@ -66,6 +70,10 @@
 			membershipExceptions = (
 				Model/ServerAPIManager.swift,
 				Model/User.swift,
+				View/AddFriendViewController.swift,
+				View/cell/inviteCell.swift,
+				View/cell/inviteCell.xib,
+				View/FriendViewController.swift,
 			);
 			target = 257305512D06E9EA00F7A7C5 /* Koko_FriendsUITests */;
 		};

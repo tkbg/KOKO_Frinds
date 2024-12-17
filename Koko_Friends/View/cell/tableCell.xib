@@ -80,6 +80,7 @@
             </tableViewCellContentView>
             <accessibility key="accessibilityConfiguration" identifier="tableCell"/>
             <connections>
+                <outlet property="TransferBtn" destination="2Ij-85-d6r" id="HDA-Fb-kcP"/>
                 <outlet property="name1" destination="isU-Zx-e95" id="BtQ-I8-0Ie"/>
                 <outlet property="star" destination="OeP-Ao-dMN" id="Iii-0k-rnz"/>
                 <outlet property="status" destination="k0g-hm-WeF" id="BFL-EV-Cvg"/>

@@ -169,6 +169,36 @@ class ServerAPIManager: NSObject {
                 }
         }
     }
+    func friend4API(onSuccess: @escaping(NSDictionary) -> Void, onFailure: @escaping([String: String]) -> Void) {
+        
+        let urlString = "https://dimanyen.github.io/friend4.json"
+        
+        Alamofire.request(urlString, method: .get, parameters: nil)
+            .responseJSON { response in
+                if let status = response.response?.statusCode {
+                    switch(status){
+                        
+                    case 200:
+                        
+                        let json = response.result.value as? NSDictionary
+                        onSuccess(json ?? [:])
+                        
+                    default:
+                        onFailure(["errorCode": String(describing: status), "errorMsg": NSLocalizedString("error_other", comment: "")])
+                    }
+                } else {
+                    let error = response.result.error
+                    switch (error?._code) {
+                    case NSURLErrorCannotFindHost:
+                        onFailure(["errorCode": String(describing: error?._code), "errorMsg": NSLocalizedString("error_server", comment: "")])
+                    case NSURLErrorTimedOut:
+                        onFailure(["errorCode": String(describing: error?._code), "errorMsg": NSLocalizedString("error_timeOut", comment: "")])
+                    default:
+                        onFailure(["errorCode": String(describing: error?._code), "errorMsg": NSLocalizedString("error_other", comment: "")])
+                    }
+                }
+        }
+    }
     //MARK: - Common methods
     func cleanUserDefaultData() {
 
