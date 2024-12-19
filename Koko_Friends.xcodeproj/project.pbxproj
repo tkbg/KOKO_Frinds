@@ -50,6 +50,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				ViewController.swift,
 			);
 			target = 257305312D06E9E700F7A7C5 /* Koko_Friends */;
 		};

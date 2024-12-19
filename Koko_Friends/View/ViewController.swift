@@ -31,6 +31,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var status_2:NSMutableArray = []
     var cellDataArray:[CellData] = []
     
+    var isExpanded: Bool = false
+    
     @IBOutlet weak var middenTableView: UITableView!
     
     @IBOutlet weak var friendView: UIView!
@@ -59,7 +61,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             return self.status_2.count
         }else {
-            return self.cellDataArray.count
+            
+            var count: Int = 0
+            
+            if self.isExpanded == true {
+                
+                count = self.cellDataArray.count
+            } else {
+                
+                count = self.cellDataArray.count > 0 ? 1 : 0
+            }
+            
+            return count
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,6 +127,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 } else {
                     inviteCell.name.numberOfLines = 1
                 }
+            
+            inviteCell.alpha = 0 // 初始設為透明
+
+                // 動畫淡入
+                UIView.animate(withDuration: 0.5, delay: 0.1 * Double(indexPath.row), options: .curveEaseIn, animations: {
+                    inviteCell.alpha = 1
+                }, completion: nil)
             return inviteCell
         }
     }
@@ -122,10 +142,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.deselectRow(at: indexPath, animated: true)
         if tableView.tag == 1 {
             
-            self.cellDataArray[indexPath.row].isExpanded = !cellDataArray[indexPath.row].isExpanded
-            self.inviteTv.reloadRows(at: [indexPath], with: .automatic)
+//            self.isExpanded.toggle()
+            self.isExpanded = !self.isExpanded
+            
+//            self.cellDataArray[indexPath.row].isExpanded = !cellDataArray[indexPath.row].isExpanded
+//            self.inviteTv.reloadRows(at: [indexPath], with: .automatic)
+//            self.inviteTv.reloadData()
+//            UIView.animate(withDuration: 0.3, animations: {
+////                self.inviteTv.reloadSections(IndexSet(integer: 0), with: .automatic)
+//                self.inviteTv.reloadData()
+//                    })
+            guard let cell = tableView.cellForRow(at: indexPath) else { return }
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                
+                cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05) // 放大 5%
+            }) { _ in
+                
+                UIView.animate(withDuration: 0.3) {
+                    
+                    cell.transform = .identity // 恢復原始大小
+                    
+                    if self.isExpanded {
+                        
+                        let insertIndexPath = IndexPath(row: indexPath.row, section: 0)
+                        tableView.insertRows(at: [insertIndexPath], with: .top) // 加入動畫
+                    } else {
+                        
+                        tableView.deleteRows(at: [indexPath], with: .bottom) // 加入動畫
+                    }
+                    
+                    self.inviteTv.reloadData()
+                }
+            }
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 44

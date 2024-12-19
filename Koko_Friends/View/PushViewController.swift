@@ -12,7 +12,8 @@ class PushViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad() }
+        super.viewDidLoad()
+    }
     
     @IBAction func pushToAddFriend(_ sender: UIButton) {
         
